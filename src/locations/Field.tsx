@@ -9,7 +9,7 @@ import {
 } from "@contentful/f36-components";
 import { useFieldValue, useSDK } from "@contentful/react-apps-toolkit";
 import { useEffect, useState } from "react";
-import IconResolver, { AllIconNames, Close, Search } from "../components/Icons";
+import IconResolver, { AllIconNames, Search } from "../components/Icons";
 
 type FieldValue = string | null;
 
