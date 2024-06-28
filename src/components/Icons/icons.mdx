@@ -1,0 +1,48 @@
+import {Meta, IconGallery, IconItem} from '@storybook/blocks';
+
+import * as Icons from '~/components/Icons';
+import * as IconsService from '~/components/Icons/Service/';
+import * as IconsSocial from '~/components/Icons/Social/';
+import * as IconsPayments from '~/components/Icons/Payments/';
+
+<Meta title="Components/Icons" />
+
+# Icons
+
+<IconGallery>
+  {Object.entries(Icons).map(([name, Icon]) => (
+    <IconItem key={name} name={name}>
+      <Icon />
+    </IconItem>
+  ))}
+</IconGallery>
+
+# Service Icons
+
+<IconGallery>
+  {Object.entries(IconsService).map(([name, Icon]) => (
+    <IconItem key={name} name={name}>
+      <Icon />
+    </IconItem>
+  ))}
+</IconGallery>
+
+# Social Icons
+
+<IconGallery>
+  {Object.entries(IconsSocial).map(([name, Icon]) => (
+    <IconItem key={name} name={name}>
+      <Icon />
+    </IconItem>
+  ))}
+</IconGallery>
+
+# Payments Icons
+
+<IconGallery>
+  {Object.entries(IconsPayments).map(([name, Icon]) => (
+    <IconItem key={name} name={name}>
+      <Icon />
+    </IconItem>
+  ))}
+</IconGallery>
