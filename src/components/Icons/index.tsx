@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-export { default as Svg360View } from "./Svg360View";
+export { default as Svg360View } from "./360View";
 export { default as AccountLg } from "./AccountLg";
 export { default as AddToBag } from "./AddToBag";
 export { default as AlertCircleWrong } from "./AlertCircleWrong";
@@ -130,539 +130,158 @@ export { default as Wallet } from "./Wallet";
 export { default as ZoomIn } from "./ZoomIn";
 export { default as ZoomOut } from "./ZoomOut";
 
-const IconResolver = ({ svgName, ...props }: { svgName?: string }) => {
+const iconToImportMap = {
+  "360-view": lazy(() => import("./360View")),
+  "account-lg": lazy(() => import("./AccountLg")),
+  "add-to-bag": lazy(() => import("./AddToBag")),
+  "alert-circle-wrong": lazy(() => import("./AlertCircleWrong")),
+  "alert-circle": lazy(() => import("./AlertCircle")),
+  "alert-hexagon": lazy(() => import("./AlertHexagon")),
+  "alert-triangle": lazy(() => import("./AlertTriangle")),
+  "arrow-down": lazy(() => import("./ArrowDown")),
+  "arrow-left": lazy(() => import("./ArrowLeft")),
+  "arrow-right": lazy(() => import("./ArrowRight")),
+  "arrow-up-left": lazy(() => import("./ArrowUpLeft")),
+  "arrow-up-right": lazy(() => import("./ArrowUpRight")),
+  "arrow-up": lazy(() => import("./ArrowUp")),
+  billing: lazy(() => import("./Billing")),
+  "calendar-tick": lazy(() => import("./CalendarTick")),
+  calendar: lazy(() => import("./Calendar")),
+  careeres: lazy(() => import("./Careeres")),
+  "check-circle": lazy(() => import("./CheckCircle")),
+  check: lazy(() => import("./Check")),
+  "chevron-down": lazy(() => import("./ChevronDown")),
+  "chevron-left": lazy(() => import("./ChevronLeft")),
+  "chevron-right": lazy(() => import("./ChevronRight")),
+  "chevron-selector-horizontal": lazy(
+    () => import("./ChevronSelectorHorizontal")
+  ),
+  "chevron-selector-vertical": lazy(() => import("./ChevronSelectorVertical")),
+  "chevron-up": lazy(() => import("./ChevronUp")),
+  "click-collect-available": lazy(() => import("./ClickCollectAvailable")),
+  "click-collect-not-available": lazy(
+    () => import("./ClickCollectNotAvailable")
+  ),
+  "click-collect": lazy(() => import("./ClickCollect")),
+  clock: lazy(() => import("./Clock")),
+  close: lazy(() => import("./Close")),
+  "coins-hand": lazy(() => import("./CoinsHand")),
+  compare: lazy(() => import("./Compare")),
+  cover: lazy(() => import("./Cover")),
+  "credit-card-check": lazy(() => import("./CreditCardCheck")),
+  "credit-card-edit": lazy(() => import("./CreditCardEdit")),
+  "credit-card-lock": lazy(() => import("./CreditCardLock")),
+  "credit-card-plus": lazy(() => import("./CreditCardPlus")),
+  "credit-card-x": lazy(() => import("./CreditCardX")),
+  "credit-card": lazy(() => import("./CreditCard")),
+  "customer-support": lazy(() => import("./CustomerSupport")),
+  delivery: lazy(() => import("./Delivery")),
+  "digital-item-cloud": lazy(() => import("./DigitalItemCloud")),
+  "dots-horizontal": lazy(() => import("./DotsHorizontal")),
+  "dots-vertical": lazy(() => import("./DotsVertical")),
+  download: lazy(() => import("./Download")),
+  energy: lazy(() => import("./Energy")),
+  equals: lazy(() => import("./Equals")),
+  expand: lazy(() => import("./Expand")),
+  "eye-off": lazy(() => import("./EyeOff")),
+  eye: lazy(() => import("./Eye")),
+  "face-id": lazy(() => import("./FaceId")),
+  fast: lazy(() => import("./Fast")),
+  "file-attachment": lazy(() => import("./FileAttachment")),
+  "file-check": lazy(() => import("./FileCheck")),
+  "file-download": lazy(() => import("./FileDownload")),
+  "file-plus": lazy(() => import("./FilePlus")),
+  "file-search": lazy(() => import("./FileSearch")),
+  "file-x": lazy(() => import("./FileX")),
+  file: lazy(() => import("./File")),
+  filters: lazy(() => import("./Filters")),
+  gift: lazy(() => import("./Gift")),
+  globe: lazy(() => import("./Globe")),
+  heart: lazy(() => import("./Heart")),
+  "help-circle": lazy(() => import("./HelpCircle")),
+  help: lazy(() => import("./Help")),
+  home: lazy(() => import("./Home")),
+  "image-gallery": lazy(() => import("./ImageGallery")),
+  image: lazy(() => import("./Image")),
+  "in-person-service-01": lazy(() => import("./InPersonService01")),
+  "in-person-service-02": lazy(() => import("./InPersonService02")),
+  "in-store-only": lazy(() => import("./InStoreOnly")),
+  "info-circle": lazy(() => import("./InfoCircle")),
+  key: lazy(() => import("./Key")),
+  "link-external": lazy(() => import("./LinkExternal")),
+  link: lazy(() => import("./Link")),
+  lock: lazy(() => import("./Lock")),
+  mail: lazy(() => import("./Mail")),
+  "mark-location": lazy(() => import("./MarkLocation")),
+  "marker-pin-01": lazy(() => import("./MarkerPin01")),
+  "marker-pin-02": lazy(() => import("./MarkerPin02")),
+  "marker-pin-03": lazy(() => import("./MarkerPin03")),
+  menu: lazy(() => import("./Menu")),
+  "message-question": lazy(() => import("./MessageQuestion")),
+  message: lazy(() => import("./Message")),
+  minimize: lazy(() => import("./Minimize")),
+  minus: lazy(() => import("./Minus")),
+  news: lazy(() => import("./News")),
+  "online-only": lazy(() => import("./OnlineOnly")),
+  "package-search": lazy(() => import("./PackageSearch")),
+  package: lazy(() => import("./Package")),
+  paperclip: lazy(() => import("./Paperclip")),
+  "phone-call": lazy(() => import("./PhoneCall")),
+  play: lazy(() => import("./Play")),
+  plus: lazy(() => import("./Plus")),
+  "price-check": lazy(() => import("./PriceCheck")),
+  promo: lazy(() => import("./Promo")),
+  recycle: lazy(() => import("./Recycle")),
+  "refresh-auto": lazy(() => import("./RefreshAuto")),
+  "reverse-left": lazy(() => import("./ReverseLeft")),
+  "reverse-right": lazy(() => import("./ReverseRight")),
+  ruler: lazy(() => import("./Ruler")),
+  sale: lazy(() => import("./Sale")),
+  search: lazy(() => import("./Search")),
+  service: lazy(() => import("./Service")),
+  settings: lazy(() => import("./Settings")),
+  "shield-tick": lazy(() => import("./ShieldTick")),
+  shield: lazy(() => import("./Shield")),
+  shipping: lazy(() => import("./Shipping")),
+  "shopping-cart-lg": lazy(() => import("./ShoppingCartLg")),
+  "shopping-cart": lazy(() => import("./ShoppingCart")),
+  "store-cash-lg": lazy(() => import("./StoreCashLg")),
+  "store-cash-small": lazy(() => import("./StoreCashSmall")),
+  "store-lg": lazy(() => import("./StoreLg")),
+  "switch-horizontal-01": lazy(() => import("./SwitchHorizontal01")),
+  "switch-horizontal-02": lazy(() => import("./SwitchHorizontal02")),
+  "switch-vertical-01": lazy(() => import("./SwitchVertical01")),
+  "switch-vertical-02": lazy(() => import("./SwitchVertical02")),
+  "tag-lg": lazy(() => import("./TagLg")),
+  tag: lazy(() => import("./Tag")),
+  "thumbs-down": lazy(() => import("./ThumbsDown")),
+  "thumbs-up": lazy(() => import("./ThumbsUp")),
+  "top-selller": lazy(() => import("./TopSelller")),
+  trash: lazy(() => import("./Trash")),
+  video: lazy(() => import("./Video")),
+  "volume-max": lazy(() => import("./VolumeMax")),
+  "volume-min": lazy(() => import("./VolumeMin")),
+  "volume-x": lazy(() => import("./VolumeX")),
+  wallet: lazy(() => import("./Wallet")),
+  "zoom-in": lazy(() => import("./ZoomIn")),
+  "zoom-out": lazy(() => import("./ZoomOut")),
+};
+
+const IconResolver = ({
+  svgName,
+  className,
+  ...props
+}: {
+  svgName?: string;
+  className?: string;
+}) => {
   if (!svgName) {
     return null;
   }
 
-  let GeneratedIconComponent;
-  switch (svgName) {
-    case "360-view":
-      GeneratedIconComponent = lazy(() => import("./Svg360View"));
-      break;
-
-    case "account-lg":
-      GeneratedIconComponent = lazy(() => import("./AccountLg"));
-      break;
-
-    case "add-to-bag":
-      GeneratedIconComponent = lazy(() => import("./AddToBag"));
-      break;
-
-    case "alert-circle-wrong":
-      GeneratedIconComponent = lazy(() => import("./AlertCircleWrong"));
-      break;
-
-    case "alert-circle":
-      GeneratedIconComponent = lazy(() => import("./AlertCircle"));
-      break;
-
-    case "alert-hexagon":
-      GeneratedIconComponent = lazy(() => import("./AlertHexagon"));
-      break;
-
-    case "alert-triangle":
-      GeneratedIconComponent = lazy(() => import("./AlertTriangle"));
-      break;
-
-    case "arrow-down":
-      GeneratedIconComponent = lazy(() => import("./ArrowDown"));
-      break;
-
-    case "arrow-left":
-      GeneratedIconComponent = lazy(() => import("./ArrowLeft"));
-      break;
-
-    case "arrow-right":
-      GeneratedIconComponent = lazy(() => import("./ArrowRight"));
-      break;
-
-    case "arrow-up-left":
-      GeneratedIconComponent = lazy(() => import("./ArrowUpLeft"));
-      break;
-
-    case "arrow-up-right":
-      GeneratedIconComponent = lazy(() => import("./ArrowUpRight"));
-      break;
-
-    case "arrow-up":
-      GeneratedIconComponent = lazy(() => import("./ArrowUp"));
-      break;
-
-    case "billing":
-      GeneratedIconComponent = lazy(() => import("./Billing"));
-      break;
-
-    case "calendar-tick":
-      GeneratedIconComponent = lazy(() => import("./CalendarTick"));
-      break;
-
-    case "calendar":
-      GeneratedIconComponent = lazy(() => import("./Calendar"));
-      break;
-
-    case "careeres":
-      GeneratedIconComponent = lazy(() => import("./Careeres"));
-      break;
-
-    case "check-circle":
-      GeneratedIconComponent = lazy(() => import("./CheckCircle"));
-      break;
-
-    case "check":
-      GeneratedIconComponent = lazy(() => import("./Check"));
-      break;
-
-    case "chevron-down":
-      GeneratedIconComponent = lazy(() => import("./ChevronDown"));
-      break;
-
-    case "chevron-left":
-      GeneratedIconComponent = lazy(() => import("./ChevronLeft"));
-      break;
-
-    case "chevron-right":
-      GeneratedIconComponent = lazy(() => import("./ChevronRight"));
-      break;
-
-    case "chevron-selector-horizontal":
-      GeneratedIconComponent = lazy(
-        () => import("./ChevronSelectorHorizontal")
-      );
-      break;
-
-    case "chevron-selector-vertical":
-      GeneratedIconComponent = lazy(() => import("./ChevronSelectorVertical"));
-      break;
-
-    case "chevron-up":
-      GeneratedIconComponent = lazy(() => import("./ChevronUp"));
-      break;
-
-    case "click-collect-available":
-      GeneratedIconComponent = lazy(() => import("./ClickCollectAvailable"));
-      break;
-
-    case "click-collect-not-available":
-      GeneratedIconComponent = lazy(() => import("./ClickCollectNotAvailable"));
-      break;
-
-    case "click-collect":
-      GeneratedIconComponent = lazy(() => import("./ClickCollect"));
-      break;
-
-    case "clock":
-      GeneratedIconComponent = lazy(() => import("./Clock"));
-      break;
-
-    case "close":
-      GeneratedIconComponent = lazy(() => import("./Close"));
-      break;
-
-    case "coins-hand":
-      GeneratedIconComponent = lazy(() => import("./CoinsHand"));
-      break;
-
-    case "compare":
-      GeneratedIconComponent = lazy(() => import("./Compare"));
-      break;
-
-    case "cover":
-      GeneratedIconComponent = lazy(() => import("./Cover"));
-      break;
-
-    case "credit-card-check":
-      GeneratedIconComponent = lazy(() => import("./CreditCardCheck"));
-      break;
-
-    case "credit-card-edit":
-      GeneratedIconComponent = lazy(() => import("./CreditCardEdit"));
-      break;
-
-    case "credit-card-lock":
-      GeneratedIconComponent = lazy(() => import("./CreditCardLock"));
-      break;
-
-    case "credit-card-plus":
-      GeneratedIconComponent = lazy(() => import("./CreditCardPlus"));
-      break;
-
-    case "credit-card-x":
-      GeneratedIconComponent = lazy(() => import("./CreditCardX"));
-      break;
-
-    case "credit-card":
-      GeneratedIconComponent = lazy(() => import("./CreditCard"));
-      break;
-
-    case "customer-support":
-      GeneratedIconComponent = lazy(() => import("./CustomerSupport"));
-      break;
-
-    case "delivery":
-      GeneratedIconComponent = lazy(() => import("./Delivery"));
-      break;
-
-    case "digital-item-cloud":
-      GeneratedIconComponent = lazy(() => import("./DigitalItemCloud"));
-      break;
-
-    case "dots-horizontal":
-      GeneratedIconComponent = lazy(() => import("./DotsHorizontal"));
-      break;
-
-    case "dots-vertical":
-      GeneratedIconComponent = lazy(() => import("./DotsVertical"));
-      break;
-
-    case "download":
-      GeneratedIconComponent = lazy(() => import("./Download"));
-      break;
-
-    case "energy":
-      GeneratedIconComponent = lazy(() => import("./Energy"));
-      break;
-
-    case "equals":
-      GeneratedIconComponent = lazy(() => import("./Equals"));
-      break;
-
-    case "expand":
-      GeneratedIconComponent = lazy(() => import("./Expand"));
-      break;
-
-    case "eye-off":
-      GeneratedIconComponent = lazy(() => import("./EyeOff"));
-      break;
-
-    case "eye":
-      GeneratedIconComponent = lazy(() => import("./Eye"));
-      break;
-
-    case "face-id":
-      GeneratedIconComponent = lazy(() => import("./FaceId"));
-      break;
-
-    case "fast":
-      GeneratedIconComponent = lazy(() => import("./Fast"));
-      break;
-
-    case "file-attachment":
-      GeneratedIconComponent = lazy(() => import("./FileAttachment"));
-      break;
-
-    case "file-check":
-      GeneratedIconComponent = lazy(() => import("./FileCheck"));
-      break;
-
-    case "file-download":
-      GeneratedIconComponent = lazy(() => import("./FileDownload"));
-      break;
-
-    case "file-plus":
-      GeneratedIconComponent = lazy(() => import("./FilePlus"));
-      break;
-
-    case "file-search":
-      GeneratedIconComponent = lazy(() => import("./FileSearch"));
-      break;
-
-    case "file-x":
-      GeneratedIconComponent = lazy(() => import("./FileX"));
-      break;
-
-    case "file":
-      GeneratedIconComponent = lazy(() => import("./File"));
-      break;
-
-    case "filters":
-      GeneratedIconComponent = lazy(() => import("./Filters"));
-      break;
-
-    case "gift":
-      GeneratedIconComponent = lazy(() => import("./Gift"));
-      break;
-
-    case "globe":
-      GeneratedIconComponent = lazy(() => import("./Globe"));
-      break;
-
-    case "heart":
-      GeneratedIconComponent = lazy(() => import("./Heart"));
-      break;
-
-    case "help-circle":
-      GeneratedIconComponent = lazy(() => import("./HelpCircle"));
-      break;
-
-    case "help":
-      GeneratedIconComponent = lazy(() => import("./Help"));
-      break;
-
-    case "home":
-      GeneratedIconComponent = lazy(() => import("./Home"));
-      break;
-
-    case "image-gallery":
-      GeneratedIconComponent = lazy(() => import("./ImageGallery"));
-      break;
-
-    case "image":
-      GeneratedIconComponent = lazy(() => import("./Image"));
-      break;
-
-    case "in-person-service-01":
-      GeneratedIconComponent = lazy(() => import("./InPersonService01"));
-      break;
-
-    case "in-person-service-02":
-      GeneratedIconComponent = lazy(() => import("./InPersonService02"));
-      break;
-
-    case "in-store-only":
-      GeneratedIconComponent = lazy(() => import("./InStoreOnly"));
-      break;
-
-    case "info-circle":
-      GeneratedIconComponent = lazy(() => import("./InfoCircle"));
-      break;
-
-    case "key":
-      GeneratedIconComponent = lazy(() => import("./Key"));
-      break;
-
-    case "link-external":
-      GeneratedIconComponent = lazy(() => import("./LinkExternal"));
-      break;
-
-    case "link":
-      GeneratedIconComponent = lazy(() => import("./Link"));
-      break;
-
-    case "lock":
-      GeneratedIconComponent = lazy(() => import("./Lock"));
-      break;
-
-    case "mail":
-      GeneratedIconComponent = lazy(() => import("./Mail"));
-      break;
-
-    case "mark-location":
-      GeneratedIconComponent = lazy(() => import("./MarkLocation"));
-      break;
-
-    case "marker-pin-01":
-      GeneratedIconComponent = lazy(() => import("./MarkerPin01"));
-      break;
-
-    case "marker-pin-02":
-      GeneratedIconComponent = lazy(() => import("./MarkerPin02"));
-      break;
-
-    case "marker-pin-03":
-      GeneratedIconComponent = lazy(() => import("./MarkerPin03"));
-      break;
-
-    case "menu":
-      GeneratedIconComponent = lazy(() => import("./Menu"));
-      break;
-
-    case "message-question":
-      GeneratedIconComponent = lazy(() => import("./MessageQuestion"));
-      break;
-
-    case "message":
-      GeneratedIconComponent = lazy(() => import("./Message"));
-      break;
-
-    case "minimize":
-      GeneratedIconComponent = lazy(() => import("./Minimize"));
-      break;
-
-    case "minus":
-      GeneratedIconComponent = lazy(() => import("./Minus"));
-      break;
-
-    case "news":
-      GeneratedIconComponent = lazy(() => import("./News"));
-      break;
-
-    case "online-only":
-      GeneratedIconComponent = lazy(() => import("./OnlineOnly"));
-      break;
-
-    case "package-search":
-      GeneratedIconComponent = lazy(() => import("./PackageSearch"));
-      break;
-
-    case "package":
-      GeneratedIconComponent = lazy(() => import("./Package"));
-      break;
-
-    case "paperclip":
-      GeneratedIconComponent = lazy(() => import("./Paperclip"));
-      break;
-
-    case "phone-call":
-      GeneratedIconComponent = lazy(() => import("./PhoneCall"));
-      break;
-
-    case "play":
-      GeneratedIconComponent = lazy(() => import("./Play"));
-      break;
-
-    case "plus":
-      GeneratedIconComponent = lazy(() => import("./Plus"));
-      break;
-
-    case "price-check":
-      GeneratedIconComponent = lazy(() => import("./PriceCheck"));
-      break;
-
-    case "promo":
-      GeneratedIconComponent = lazy(() => import("./Promo"));
-      break;
-
-    case "recycle":
-      GeneratedIconComponent = lazy(() => import("./Recycle"));
-      break;
-
-    case "refresh-auto":
-      GeneratedIconComponent = lazy(() => import("./RefreshAuto"));
-      break;
-
-    case "reverse-left":
-      GeneratedIconComponent = lazy(() => import("./ReverseLeft"));
-      break;
-
-    case "reverse-right":
-      GeneratedIconComponent = lazy(() => import("./ReverseRight"));
-      break;
-
-    case "ruler":
-      GeneratedIconComponent = lazy(() => import("./Ruler"));
-      break;
-
-    case "sale":
-      GeneratedIconComponent = lazy(() => import("./Sale"));
-      break;
-
-    case "search":
-      GeneratedIconComponent = lazy(() => import("./Search"));
-      break;
-
-    case "service":
-      GeneratedIconComponent = lazy(() => import("./Service"));
-      break;
-
-    case "settings":
-      GeneratedIconComponent = lazy(() => import("./Settings"));
-      break;
-
-    case "shield-tick":
-      GeneratedIconComponent = lazy(() => import("./ShieldTick"));
-      break;
-
-    case "shield":
-      GeneratedIconComponent = lazy(() => import("./Shield"));
-      break;
-
-    case "shipping":
-      GeneratedIconComponent = lazy(() => import("./Shipping"));
-      break;
-
-    case "shopping-cart-lg":
-      GeneratedIconComponent = lazy(() => import("./ShoppingCartLg"));
-      break;
-
-    case "shopping-cart":
-      GeneratedIconComponent = lazy(() => import("./ShoppingCart"));
-      break;
-
-    case "store-cash-lg":
-      GeneratedIconComponent = lazy(() => import("./StoreCashLg"));
-      break;
-
-    case "store-cash-small":
-      GeneratedIconComponent = lazy(() => import("./StoreCashSmall"));
-      break;
-
-    case "store-lg":
-      GeneratedIconComponent = lazy(() => import("./StoreLg"));
-      break;
-
-    case "switch-horizontal-01":
-      GeneratedIconComponent = lazy(() => import("./SwitchHorizontal01"));
-      break;
-
-    case "switch-horizontal-02":
-      GeneratedIconComponent = lazy(() => import("./SwitchHorizontal02"));
-      break;
-
-    case "switch-vertical-01":
-      GeneratedIconComponent = lazy(() => import("./SwitchVertical01"));
-      break;
-
-    case "switch-vertical-02":
-      GeneratedIconComponent = lazy(() => import("./SwitchVertical02"));
-      break;
-
-    case "tag-lg":
-      GeneratedIconComponent = lazy(() => import("./TagLg"));
-      break;
-
-    case "tag":
-      GeneratedIconComponent = lazy(() => import("./Tag"));
-      break;
-
-    case "thumbs-down":
-      GeneratedIconComponent = lazy(() => import("./ThumbsDown"));
-      break;
-
-    case "thumbs-up":
-      GeneratedIconComponent = lazy(() => import("./ThumbsUp"));
-      break;
-
-    case "top-selller":
-      GeneratedIconComponent = lazy(() => import("./TopSelller"));
-      break;
-
-    case "trash":
-      GeneratedIconComponent = lazy(() => import("./Trash"));
-      break;
-
-    case "video":
-      GeneratedIconComponent = lazy(() => import("./Video"));
-      break;
-
-    case "volume-max":
-      GeneratedIconComponent = lazy(() => import("./VolumeMax"));
-      break;
-
-    case "volume-min":
-      GeneratedIconComponent = lazy(() => import("./VolumeMin"));
-      break;
-
-    case "volume-x":
-      GeneratedIconComponent = lazy(() => import("./VolumeX"));
-      break;
-
-    case "wallet":
-      GeneratedIconComponent = lazy(() => import("./Wallet"));
-      break;
-
-    case "zoom-in":
-      GeneratedIconComponent = lazy(() => import("./ZoomIn"));
-      break;
-
-    case "zoom-out":
-      GeneratedIconComponent = lazy(() => import("./ZoomOut"));
-      break;
-
-    default:
-      GeneratedIconComponent = null;
-      break;
-  }
+  const GeneratedIconComponent: React.LazyExoticComponent<
+    React.ComponentType<any>
+  > = iconToImportMap[svgName as keyof typeof iconToImportMap];
 
   if (!GeneratedIconComponent) {
     return null;
@@ -670,7 +289,7 @@ const IconResolver = ({ svgName, ...props }: { svgName?: string }) => {
 
   return (
     <Suspense>
-      <GeneratedIconComponent {...props} />
+      <GeneratedIconComponent className={className} {...props} />
     </Suspense>
   );
 };

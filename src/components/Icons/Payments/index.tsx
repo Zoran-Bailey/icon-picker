@@ -36,163 +36,62 @@ export {default as ZipDisclaimer} from './ZipDisclaimer';
 export {default as ZipMonochrome} from './ZipMonochrome';
 export {default as Zip} from './Zip';
 
-const IconResolver = ({svgName, ...props}: {svgName?: string}) => {
+const iconToImportMap = {
+  'afterpay-disclaimer': lazy(() => import('./AfterpayDisclaimer')),
+  'afterpay-monochrome': lazy(() => import('./AfterpayMonochrome')),
+  afterpay: lazy(() => import('./Afterpay')),
+  'amex-monochrome': lazy(() => import('./AmexMonochrome')),
+  'amex-safekey-monochrome': lazy(() => import('./AmexSafekeyMonochrome')),
+  'amex-safekey': lazy(() => import('./AmexSafekey')),
+  amex: lazy(() => import('./Amex')),
+  'apple-pay-monochrome': lazy(() => import('./ApplePayMonochrome')),
+  'apple-pay': lazy(() => import('./ApplePay')),
+  'diners-club-monochrome': lazy(() => import('./DinersClubMonochrome')),
+  'diners-club': lazy(() => import('./DinersClub')),
+  'g-pay-monochrome': lazy(() => import('./GPayMonochrome')),
+  'g-pay': lazy(() => import('./GPay')),
+  'humm-monochrome': lazy(() => import('./HummMonochrome')),
+  humm: lazy(() => import('./Humm')),
+  'klarna-monochrome': lazy(() => import('./KlarnaMonochrome')),
+  klarna: lazy(() => import('./Klarna')),
+  'latitude-monochrome': lazy(() => import('./LatitudeMonochrome')),
+  'latitude-pay-lg': lazy(() => import('./LatitudePayLg')),
+  latitude: lazy(() => import('./Latitude')),
+  'master-card-monochrome': lazy(() => import('./MasterCardMonochrome')),
+  'master-card': lazy(() => import('./MasterCard')),
+  'mastercard-id-check-monochrome': lazy(
+    () => import('./MastercardIdCheckMonochrome'),
+  ),
+  'mastercard-id-check': lazy(() => import('./MastercardIdCheck')),
+  'paypal-disclaimer': lazy(() => import('./PaypalDisclaimer')),
+  'paypal-monochrome': lazy(() => import('./PaypalMonochrome')),
+  paypal: lazy(() => import('./Paypal')),
+  'shop-pay-monochrome': lazy(() => import('./ShopPayMonochrome')),
+  'shop-pay': lazy(() => import('./ShopPay')),
+  'visa-monochrome': lazy(() => import('./VisaMonochrome')),
+  'visa-verified-monochrome': lazy(() => import('./VisaVerifiedMonochrome')),
+  'visa-verified': lazy(() => import('./VisaVerified')),
+  visa: lazy(() => import('./Visa')),
+  'zip-disclaimer': lazy(() => import('./ZipDisclaimer')),
+  'zip-monochrome': lazy(() => import('./ZipMonochrome')),
+  zip: lazy(() => import('./Zip')),
+};
+
+const IconResolver = ({
+  svgName,
+  className,
+  ...props
+}: {
+  svgName?: string;
+  className?: string;
+}) => {
   if (!svgName) {
     return null;
   }
 
-  let GeneratedIconComponent;
-  switch (svgName) {
-    case 'afterpay-disclaimer':
-      GeneratedIconComponent = lazy(() => import('./AfterpayDisclaimer'));
-      break;
-
-    case 'afterpay-monochrome':
-      GeneratedIconComponent = lazy(() => import('./AfterpayMonochrome'));
-      break;
-
-    case 'afterpay':
-      GeneratedIconComponent = lazy(() => import('./Afterpay'));
-      break;
-
-    case 'amex-monochrome':
-      GeneratedIconComponent = lazy(() => import('./AmexMonochrome'));
-      break;
-
-    case 'amex-safekey-monochrome':
-      GeneratedIconComponent = lazy(() => import('./AmexSafekeyMonochrome'));
-      break;
-
-    case 'amex-safekey':
-      GeneratedIconComponent = lazy(() => import('./AmexSafekey'));
-      break;
-
-    case 'amex':
-      GeneratedIconComponent = lazy(() => import('./Amex'));
-      break;
-
-    case 'apple-pay-monochrome':
-      GeneratedIconComponent = lazy(() => import('./ApplePayMonochrome'));
-      break;
-
-    case 'apple-pay':
-      GeneratedIconComponent = lazy(() => import('./ApplePay'));
-      break;
-
-    case 'diners-club-monochrome':
-      GeneratedIconComponent = lazy(() => import('./DinersClubMonochrome'));
-      break;
-
-    case 'diners-club':
-      GeneratedIconComponent = lazy(() => import('./DinersClub'));
-      break;
-
-    case 'g-pay-monochrome':
-      GeneratedIconComponent = lazy(() => import('./GPayMonochrome'));
-      break;
-
-    case 'g-pay':
-      GeneratedIconComponent = lazy(() => import('./GPay'));
-      break;
-
-    case 'humm-monochrome':
-      GeneratedIconComponent = lazy(() => import('./HummMonochrome'));
-      break;
-
-    case 'humm':
-      GeneratedIconComponent = lazy(() => import('./Humm'));
-      break;
-
-    case 'klarna-monochrome':
-      GeneratedIconComponent = lazy(() => import('./KlarnaMonochrome'));
-      break;
-
-    case 'klarna':
-      GeneratedIconComponent = lazy(() => import('./Klarna'));
-      break;
-
-    case 'latitude-monochrome':
-      GeneratedIconComponent = lazy(() => import('./LatitudeMonochrome'));
-      break;
-
-    case 'latitude-pay-lg':
-      GeneratedIconComponent = lazy(() => import('./LatitudePayLg'));
-      break;
-
-    case 'latitude':
-      GeneratedIconComponent = lazy(() => import('./Latitude'));
-      break;
-
-    case 'master-card-monochrome':
-      GeneratedIconComponent = lazy(() => import('./MasterCardMonochrome'));
-      break;
-
-    case 'master-card':
-      GeneratedIconComponent = lazy(() => import('./MasterCard'));
-      break;
-
-    case 'mastercard-id-check-monochrome':
-      GeneratedIconComponent = lazy(
-        () => import('./MastercardIdCheckMonochrome'),
-      );
-      break;
-
-    case 'mastercard-id-check':
-      GeneratedIconComponent = lazy(() => import('./MastercardIdCheck'));
-      break;
-
-    case 'paypal-disclaimer':
-      GeneratedIconComponent = lazy(() => import('./PaypalDisclaimer'));
-      break;
-
-    case 'paypal-monochrome':
-      GeneratedIconComponent = lazy(() => import('./PaypalMonochrome'));
-      break;
-
-    case 'paypal':
-      GeneratedIconComponent = lazy(() => import('./Paypal'));
-      break;
-
-    case 'shop-pay-monochrome':
-      GeneratedIconComponent = lazy(() => import('./ShopPayMonochrome'));
-      break;
-
-    case 'shop-pay':
-      GeneratedIconComponent = lazy(() => import('./ShopPay'));
-      break;
-
-    case 'visa-monochrome':
-      GeneratedIconComponent = lazy(() => import('./VisaMonochrome'));
-      break;
-
-    case 'visa-verified-monochrome':
-      GeneratedIconComponent = lazy(() => import('./VisaVerifiedMonochrome'));
-      break;
-
-    case 'visa-verified':
-      GeneratedIconComponent = lazy(() => import('./VisaVerified'));
-      break;
-
-    case 'visa':
-      GeneratedIconComponent = lazy(() => import('./Visa'));
-      break;
-
-    case 'zip-disclaimer':
-      GeneratedIconComponent = lazy(() => import('./ZipDisclaimer'));
-      break;
-
-    case 'zip-monochrome':
-      GeneratedIconComponent = lazy(() => import('./ZipMonochrome'));
-      break;
-
-    case 'zip':
-      GeneratedIconComponent = lazy(() => import('./Zip'));
-      break;
-
-    default:
-      GeneratedIconComponent = null;
-      break;
-  }
+  const GeneratedIconComponent: React.LazyExoticComponent<
+    React.ComponentType<any>
+  > = iconToImportMap[svgName as keyof typeof iconToImportMap];
 
   if (!GeneratedIconComponent) {
     return null;
@@ -200,7 +99,7 @@ const IconResolver = ({svgName, ...props}: {svgName?: string}) => {
 
   return (
     <Suspense>
-      <GeneratedIconComponent {...props} />
+      <GeneratedIconComponent className={className} {...props} />
     </Suspense>
   );
 };

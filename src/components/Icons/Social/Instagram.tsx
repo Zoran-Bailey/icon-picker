@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-// import styles from '~/components/Icons/Icons.module.css';
+// import styles from "./IconsSocial.module.css";
 import { IconProps } from "~/components/Icons/Icons";
 const cx = classNames.bind({});
 const SvgInstagram = ({

@@ -15,77 +15,39 @@ export {default as SmartHome} from './SmartHome';
 export {default as Tv} from './Tv';
 export {default as WashinMachineDryers} from './WashinMachineDryers';
 
-const IconResolver = ({svgName, ...props}: {svgName?: string}) => {
+const iconToImportMap = {
+  'air-conditioner': lazy(() => import('./AirConditioner')),
+  antenas: lazy(() => import('./Antenas')),
+  audio: lazy(() => import('./Audio')),
+  bbqs: lazy(() => import('./Bbqs')),
+  'ceiling-fans': lazy(() => import('./CeilingFans')),
+  computer: lazy(() => import('./Computer')),
+  'cooker-hood': lazy(() => import('./CookerHood')),
+  cooktops: lazy(() => import('./Cooktops')),
+  dishwasher: lazy(() => import('./Dishwasher')),
+  fridge: lazy(() => import('./Fridge')),
+  'heater-radiator': lazy(() => import('./HeaterRadiator')),
+  oven: lazy(() => import('./Oven')),
+  'smart-home': lazy(() => import('./SmartHome')),
+  tv: lazy(() => import('./Tv')),
+  'washin-machine-dryers': lazy(() => import('./WashinMachineDryers')),
+};
+
+const IconResolver = ({
+  svgName,
+  className,
+  ...props
+}: {
+  svgName?: string;
+  className?: string;
+}) => {
   if (!svgName) {
     return null;
   }
 
-  let GeneratedIconComponent;
-  switch (svgName) {
-    case 'air-conditioner':
-      GeneratedIconComponent = lazy(() => import('./AirConditioner'));
-      break;
-
-    case 'antenas':
-      GeneratedIconComponent = lazy(() => import('./Antenas'));
-      break;
-
-    case 'audio':
-      GeneratedIconComponent = lazy(() => import('./Audio'));
-      break;
-
-    case 'bbqs':
-      GeneratedIconComponent = lazy(() => import('./Bbqs'));
-      break;
-
-    case 'ceiling-fans':
-      GeneratedIconComponent = lazy(() => import('./CeilingFans'));
-      break;
-
-    case 'computer':
-      GeneratedIconComponent = lazy(() => import('./Computer'));
-      break;
-
-    case 'cooker-hood':
-      GeneratedIconComponent = lazy(() => import('./CookerHood'));
-      break;
-
-    case 'cooktops':
-      GeneratedIconComponent = lazy(() => import('./Cooktops'));
-      break;
-
-    case 'dishwasher':
-      GeneratedIconComponent = lazy(() => import('./Dishwasher'));
-      break;
-
-    case 'fridge':
-      GeneratedIconComponent = lazy(() => import('./Fridge'));
-      break;
-
-    case 'heater-radiator':
-      GeneratedIconComponent = lazy(() => import('./HeaterRadiator'));
-      break;
-
-    case 'oven':
-      GeneratedIconComponent = lazy(() => import('./Oven'));
-      break;
-
-    case 'smart-home':
-      GeneratedIconComponent = lazy(() => import('./SmartHome'));
-      break;
-
-    case 'tv':
-      GeneratedIconComponent = lazy(() => import('./Tv'));
-      break;
-
-    case 'washin-machine-dryers':
-      GeneratedIconComponent = lazy(() => import('./WashinMachineDryers'));
-      break;
-
-    default:
-      GeneratedIconComponent = null;
-      break;
-  }
+  const GeneratedIconComponent: React.LazyExoticComponent<
+    React.ComponentType<any>
+  > = iconToImportMap[svgName as keyof typeof iconToImportMap];
 
   if (!GeneratedIconComponent) {
     return null;
@@ -93,7 +55,7 @@ const IconResolver = ({svgName, ...props}: {svgName?: string}) => {
 
   return (
     <Suspense>
-      <GeneratedIconComponent {...props} />
+      <GeneratedIconComponent className={className} {...props} />
     </Suspense>
   );
 };

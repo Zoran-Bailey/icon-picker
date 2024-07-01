@@ -9,8 +9,8 @@ import {
 } from "@contentful/f36-components";
 import { useFieldValue, useSDK } from "@contentful/react-apps-toolkit";
 import { useEffect, useState } from "react";
-import IconResolver, { AllIconNames, Search } from "../components/Icons";
-
+import IconResolver, { AllIconNames, Close, Search } from "../components/Icons";
+import "./Field.css";
 type FieldValue = string | null;
 
 // height when open makes dropdown list visible with no scrolling in iframe
@@ -40,55 +40,42 @@ const Field = () => {
     setIcon(item);
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
   return (
     <Form>
-      <Stack
-        flexDirection="column"
-        alignItems="start"
-        style={{ width: "calc(100% - 2px)", left: 0 }}
-      >
+      <Stack flexDirection="column" alignItems="start" className="stack">
         <Autocomplete
           items={filteredItems}
           onInputValueChange={handleInputValueChange}
           onSelectItem={handleSelectItem}
           isRequired={sdk.field.required}
           icon={<Search />}
-          style={{
-            width: "100%",
-          }}
+          className="autoComplete"
           onOpen={() => setIsOpen(true)}
-          onClose={handleClose}
+          onClose={() => setIsOpen(false)}
           renderItem={(item) => (
-            <span
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: "20px",
-              }}
-            >
+            <span className="dropdownRow">
               <p>{item}</p>
-              <IconResolver svgName={item} />
+              <IconResolver svgName={item} className={"icon"} />
             </span>
           )}
         />
 
-        <Paragraph
-          style={{
-            display: "flex",
-            gap: "5px",
-            alignItems: "center",
-          }}
-        >
+        <Paragraph className="detail">
           Selected Icon:
-          <Flex gap="10px" alignItems="center" style={{ height: "16px" }}>
-            <b>{icon}</b> {icon ? <IconResolver svgName={icon} /> : null}{" "}
+          <Flex gap="10px" alignItems="center">
+            <b>{icon}</b>{" "}
+            {icon ? <IconResolver svgName={icon} className={"icon"} /> : null}
           </Flex>
         </Paragraph>
-        <Button onClick={() => setIcon(null)}>Clear Icon</Button>
+
+        <Button
+          onClick={() => setIcon(null)}
+          size="small"
+          endIcon={<Close />}
+          isDisabled={icon === null}
+        >
+          Clear Selected Icon
+        </Button>
       </Stack>
     </Form>
   );

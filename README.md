@@ -11,6 +11,19 @@ when creating the app definition for tthis app ensure the following
 
 when developing the app ensure the frontend url in the app definition is set to `http://localhost:1234`
 
+## Updating icons
+
+### Update an icon
+
+- find the icon component
+- update it
+
+### Add a new icon
+
+- add a new entry to the import map, ensure it's a lazy import
+- create the new icon component
+- update the `AllIconNames` array with the svg name of the icon
+
 ---
 
 ## How to use

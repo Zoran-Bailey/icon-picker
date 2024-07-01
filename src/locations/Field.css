@@ -1,0 +1,26 @@
+.stack {
+  /* subtract 2px due to frame border  */
+  width: calc(100% - 2px);
+  left: 0;
+}
+
+.autoComplete {
+  width: 100%;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.dropdownRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

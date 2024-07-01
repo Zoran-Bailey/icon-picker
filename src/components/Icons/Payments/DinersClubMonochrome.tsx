@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
-// import styles from '~/components/Icons/Icons.module.css';
+// import styles from "./IconsPayments.module.css";
 import { IconProps } from "~/components/Icons/Icons";
 const cx = classNames.bind({});
 const SvgDinersClubMonochrome = ({
   color = "currentColor",
-  size = "md",
+  size = "lg",
   className,
   ...props
 }: IconProps) => {

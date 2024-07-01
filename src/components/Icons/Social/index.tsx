@@ -16,81 +16,40 @@ export {default as XTwitter} from './XTwitter';
 export {default as YoutubeMonochrome} from './YoutubeMonochrome';
 export {default as Youtube} from './Youtube';
 
-const IconResolver = ({svgName, ...props}: {svgName?: string}) => {
+const iconToImportMap = {
+  'facebook-monochrome': lazy(() => import('./FacebookMonochrome')),
+  facebook: lazy(() => import('./Facebook')),
+  'instagram-monochrome': lazy(() => import('./InstagramMonochrome')),
+  instagram: lazy(() => import('./Instagram')),
+  'linkedin-monochrome': lazy(() => import('./LinkedinMonochrome')),
+  linkedin: lazy(() => import('./Linkedin')),
+  'pinterest-monochrome': lazy(() => import('./PinterestMonochrome')),
+  pinterest: lazy(() => import('./Pinterest')),
+  'tiktok-monochrome': lazy(() => import('./TiktokMonochrome')),
+  tiktok: lazy(() => import('./Tiktok')),
+  'tumblr-monochrome': lazy(() => import('./TumblrMonochrome')),
+  tumblr: lazy(() => import('./Tumblr')),
+  'x-twitter-monochrome': lazy(() => import('./XTwitterMonochrome')),
+  'x-twitter': lazy(() => import('./XTwitter')),
+  'youtube-monochrome': lazy(() => import('./YoutubeMonochrome')),
+  youtube: lazy(() => import('./Youtube')),
+};
+
+const IconResolver = ({
+  svgName,
+  className,
+  ...props
+}: {
+  svgName?: string;
+  className?: string;
+}) => {
   if (!svgName) {
     return null;
   }
 
-  let GeneratedIconComponent;
-  switch (svgName) {
-    case 'facebook-monochrome':
-      GeneratedIconComponent = lazy(() => import('./FacebookMonochrome'));
-      break;
-
-    case 'facebook':
-      GeneratedIconComponent = lazy(() => import('./Facebook'));
-      break;
-
-    case 'instagram-monochrome':
-      GeneratedIconComponent = lazy(() => import('./InstagramMonochrome'));
-      break;
-
-    case 'instagram':
-      GeneratedIconComponent = lazy(() => import('./Instagram'));
-      break;
-
-    case 'linkedin-monochrome':
-      GeneratedIconComponent = lazy(() => import('./LinkedinMonochrome'));
-      break;
-
-    case 'linkedin':
-      GeneratedIconComponent = lazy(() => import('./Linkedin'));
-      break;
-
-    case 'pinterest-monochrome':
-      GeneratedIconComponent = lazy(() => import('./PinterestMonochrome'));
-      break;
-
-    case 'pinterest':
-      GeneratedIconComponent = lazy(() => import('./Pinterest'));
-      break;
-
-    case 'tiktok-monochrome':
-      GeneratedIconComponent = lazy(() => import('./TiktokMonochrome'));
-      break;
-
-    case 'tiktok':
-      GeneratedIconComponent = lazy(() => import('./Tiktok'));
-      break;
-
-    case 'tumblr-monochrome':
-      GeneratedIconComponent = lazy(() => import('./TumblrMonochrome'));
-      break;
-
-    case 'tumblr':
-      GeneratedIconComponent = lazy(() => import('./Tumblr'));
-      break;
-
-    case 'x-twitter-monochrome':
-      GeneratedIconComponent = lazy(() => import('./XTwitterMonochrome'));
-      break;
-
-    case 'x-twitter':
-      GeneratedIconComponent = lazy(() => import('./XTwitter'));
-      break;
-
-    case 'youtube-monochrome':
-      GeneratedIconComponent = lazy(() => import('./YoutubeMonochrome'));
-      break;
-
-    case 'youtube':
-      GeneratedIconComponent = lazy(() => import('./Youtube'));
-      break;
-
-    default:
-      GeneratedIconComponent = null;
-      break;
-  }
+  const GeneratedIconComponent: React.LazyExoticComponent<
+    React.ComponentType<any>
+  > = iconToImportMap[svgName as keyof typeof iconToImportMap];
 
   if (!GeneratedIconComponent) {
     return null;
@@ -98,7 +57,7 @@ const IconResolver = ({svgName, ...props}: {svgName?: string}) => {
 
   return (
     <Suspense>
-      <GeneratedIconComponent {...props} />
+      <GeneratedIconComponent className={className} {...props} />
     </Suspense>
   );
 };
